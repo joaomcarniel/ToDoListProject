@@ -1,0 +1,37 @@
+@page
+@model TodoApp.Pages.Todos.IndexModel
+@{
+    ViewData["Title"] = "Task List";
+}
+
+<h1>To-Do</h1>
+<a class="btn btn-primary mb-3" asp-page="Create">Add Task</a>
+
+<ul class="list-group">
+@foreach (var item in Model.Todos)
+{
+    <li class="list-group-item d-flex justify-content-between align-items-center @(item.IsDone ? "completed" : "")">
+        <div class="d-flex align-items-center">
+            <form method="post" asp-page-handler="Toggle" class="me-3">
+                <input type="hidden" name="id" value="@item.Id" />
+                <input type="checkbox" onchange="this.form.submit()" @(item.IsDone ? "checked" : "") />
+            </form>
+            <div>
+                <strong>@item.Title</strong>
+                @if (item.DueDate.HasValue)
+                {
+                    <div class="small text-muted">Vence: @item.DueDate.Value.ToShortDateString()</div>
+                }
+            </div>
+        </div>
+        <div>
+            <a class="btn btn-sm btn-outline-secondary" asp-page="Edit" asp-route-id="@item.Id">Editar</a>
+            <a class="btn btn-sm btn-outline-danger" asp-page="Delete" asp-route-id="@item.Id">Excluir</a>
+        </div>
+    </li>
+}
+</ul>
+
+<style>
+    .completed { text-decoration: line-through; opacity: 0.7; }
+</style>

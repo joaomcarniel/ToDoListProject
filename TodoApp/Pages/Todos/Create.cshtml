@@ -1,0 +1,27 @@
+@page
+@model TodoApp.Pages.Todos.CreateModel
+@{
+    ViewData["Title"] = "Add task";
+}
+
+<h1>Add task</h1>
+
+<form method="post">
+    <div class="mb-3">
+        <label asp-for="TodoItem.Title" class="form-label"></label>
+        <input asp-for="TodoItem.Title" class="form-control" />
+        <span asp-validation-for="TodoItem.Title" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="TodoItem.DueDate" class="form-label"></label>
+        <input asp-for="TodoItem.DueDate" class="form-control" type="date" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create</button>
+    <a class="btn btn-secondary" asp-page="Index">Cancel</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
